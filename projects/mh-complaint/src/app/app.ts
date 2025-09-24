@@ -1,10 +1,10 @@
 import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MhInput } from 'mh-lib';
+import { MhInput, MhStates } from 'mh-lib';
 @Component({
   selector: 'app-root',
-  imports: [MhInput, ReactiveFormsModule, JsonPipe],
+  imports: [MhInput, MhStates, ReactiveFormsModule, JsonPipe],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -18,7 +18,8 @@ export class App {
     email: new FormControl('', [Validators.email, Validators.required]),
     address: new FormControl(''),
     city: new FormControl(''),
-    zipCode: new FormControl({ value: '', disabled: true }),
+    state: new FormControl(''),
+    zipCode: new FormControl(''),
   });
 
   onSubmit(): void {

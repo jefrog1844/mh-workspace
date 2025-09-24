@@ -1,7 +1,9 @@
 <div class="container">
   <form [formGroup]="memberInfoForm" (ngSubmit)="onSubmit()">
+    <h3>Member Information</h3>
     <lib-mh-input
-      id="basicInputTypeText"
+      id="firstName"
+      size="lg"
       label="First Name"
       type="text"
       formControlName="firstName"
@@ -9,22 +11,25 @@
       maxlength="10"
     />
     <lib-mh-input
-      id="basicInputTypeText"
+      id="lastName"
       label="Last Name"
       type="text"
       formControlName="lastName"
+      size="lg"
     />
     <lib-mh-input
-      id="basicInputTypeText"
+      id="memberId"
       label="Member Id"
       type="text"
       formControlName="memberId"
+      size="lg"
     />
-    <lib-mh-input id="basicInputTypeText" label="Phone" type="text" formControlName="phone" />
-    <lib-mh-input id="basicInputTypeText" label="Email" type="text" formControlName="email" />
-    <lib-mh-input id="basicInputTypeText" label="Address" type="text" formControlName="address" />
-    <lib-mh-input id="basicInputTypeText" label="City" type="text" formControlName="city" />
-    <lib-mh-input id="basicInputTypeText" label="Zip Code" type="text" formControlName="zipCode" />
+    <lib-mh-input id="phone" label="Phone" type="text" formControlName="phone" size="lg" />
+    <lib-mh-input id="email" label="Email" type="text" formControlName="email" size="lg" />
+    <lib-mh-input id="address" label="Address" type="text" formControlName="address" size="lg" />
+    <lib-mh-input id="city" label="City" type="text" formControlName="city" size="lg" />
+    <lib-mh-states id="state" label="State" type="text" formControlName="state" size="lg" />
+    <lib-mh-input id="zipCode" label="Zip Code" type="text" formControlName="zipCode" size="lg" />
     <div class="btn-group">
       <div class="btn-group-item">
         <button class="btn btn-primary submit-html5-form" type="submit">Submit</button>

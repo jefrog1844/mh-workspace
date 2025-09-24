@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label tabindex="-1">{{ label }}</label>
+  <select
+    #select
+    (change)="onChange(select.value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [required]="required"
+    class="form-control"
+  >
+    @for(state of statesResource.value(); track state) {
+    <option #option [disabled]="disabled" [value]="state.name">
+      {{ state.name }}
+    </option>
+    }
+  </select>
+</div>
