@@ -13,7 +13,7 @@ export class App {
   memberInfoForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    memberId: new FormControl('BK098764BK'),
+    memberId: new FormControl(''),
     phone: new FormControl(''),
     email: new FormControl('', [Validators.email, Validators.required]),
     address: new FormControl(''),

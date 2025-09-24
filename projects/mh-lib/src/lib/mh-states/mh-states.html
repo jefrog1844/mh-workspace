@@ -8,9 +8,10 @@
     [required]="required"
     class="form-control"
   >
+    <option value="">-- Select an option --</option>
     @for(state of statesResource.value(); track state) {
     <option #option [disabled]="disabled" [value]="state.name">
-      {{ state.name }}
+      {{ state.name + ' [' + state.regionCode + ']' }}
     </option>
     }
   </select>
