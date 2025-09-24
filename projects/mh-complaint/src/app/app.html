@@ -1,0 +1,35 @@
+<div class="container">
+  <form [formGroup]="memberInfoForm" (ngSubmit)="onSubmit()">
+    <lib-mh-input
+      id="basicInputTypeText"
+      label="First Name"
+      type="text"
+      formControlName="firstName"
+      minlength="3"
+      maxlength="10"
+    />
+    <lib-mh-input
+      id="basicInputTypeText"
+      label="Last Name"
+      type="text"
+      formControlName="lastName"
+    />
+    <lib-mh-input
+      id="basicInputTypeText"
+      label="Member Id"
+      type="text"
+      formControlName="memberId"
+    />
+    <lib-mh-input id="basicInputTypeText" label="Phone" type="text" formControlName="phone" />
+    <lib-mh-input id="basicInputTypeText" label="Email" type="text" formControlName="email" />
+    <lib-mh-input id="basicInputTypeText" label="Address" type="text" formControlName="address" />
+    <lib-mh-input id="basicInputTypeText" label="City" type="text" formControlName="city" />
+    <lib-mh-input id="basicInputTypeText" label="Zip Code" type="text" formControlName="zipCode" />
+    <div class="btn-group">
+      <div class="btn-group-item">
+        <button class="btn btn-primary submit-html5-form" type="submit">Submit</button>
+      </div>
+    </div>
+  </form>
+  {{ memberInfoForm.value | json }}
+</div>

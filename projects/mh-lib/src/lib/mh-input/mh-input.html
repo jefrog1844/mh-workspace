@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label for="id">{{ label }}</label>
+  <input
+    #input
+    class="form-control"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+  />
+</div>

@@ -6,6 +6,11 @@
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "mh-lib": [
+        "./dist/mh-lib"
+      ]
+    },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
@@ -22,5 +27,19 @@
     "typeCheckHostBindings": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/mh-complaint/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/mh-complaint/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/mh-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/mh-lib/tsconfig.spec.json"
+    }
+  ]
 }
