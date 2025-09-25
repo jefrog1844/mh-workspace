@@ -2,18 +2,25 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  forwardRef,
   Input,
   Renderer2,
-  Self,
   viewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'lib-mh-input',
   imports: [],
   templateUrl: './mh-input.html',
   styleUrl: './mh-input.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MhInput),
+      multi: true,
+    },
+  ],
 })
 export class MhInput implements AfterViewInit, ControlValueAccessor {
   @Input() autofocus?: boolean = false;
@@ -37,17 +44,8 @@ export class MhInput implements AfterViewInit, ControlValueAccessor {
   @Input() type?: 'number' | 'text' | 'password' | 'email' = 'text';
 
   input = viewChild.required<ElementRef>('input');
-  constructor(
-    @Self() public ngControl: NgControl,
-    private renderer: Renderer2,
-    private wrapper: ElementRef
-  ) {
-    if (this.ngControl != null) {
-      // Setting the value accessor directly (instead of using
-      // the providers) to avoid running into a circular import.
-      this.ngControl.valueAccessor = this;
-    }
-  }
+
+  constructor(private renderer: Renderer2, private wrapper: ElementRef) {}
 
   ngAfterViewInit(): void {
     // cache references to input and wrapper
@@ -57,19 +55,6 @@ export class MhInput implements AfterViewInit, ControlValueAccessor {
     // autofocus
     if (this.autofocus) {
       this.renderer.selectRootElement(inputEl).focus();
-    }
-
-    /**
-     * name - gets set on NgControl through inputs for NgModel and formControlName directives only.
-     * Does not work for standalone FormControl directive
-     */
-    if (this.ngControl.name) {
-      this.renderer.setAttribute(inputEl, 'name', this.ngControl.name.toString());
-    } else {
-      console.warn(`
-        It looks like you're using formControl which does not have an input for the
-        name attribute.  If the name attribute is required (i.e. when submitting a form),
-        it is recommended to use either ngModel or formControlName.`);
     }
 
     // set attributes

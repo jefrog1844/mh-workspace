@@ -4,13 +4,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  forwardRef,
   inject,
   Input,
   Renderer2,
-  Self,
   viewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { State } from './state';
 import { StatesService } from './states-service';
 
@@ -19,6 +19,13 @@ import { StatesService } from './states-service';
   imports: [CommonModule],
   templateUrl: './mh-states.html',
   styleUrl: './mh-states.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MhStates),
+      multi: true,
+    },
+  ],
 })
 export class MhStates implements AfterViewInit, ControlValueAccessor {
   @Input() autofocus?: boolean = false;
@@ -36,17 +43,7 @@ export class MhStates implements AfterViewInit, ControlValueAccessor {
   select = viewChild.required<ElementRef>('select');
   #statesService = inject(StatesService);
 
-  constructor(
-    @Self() public ngControl: NgControl,
-    private renderer: Renderer2,
-    private wrapper: ElementRef
-  ) {
-    if (this.ngControl != null) {
-      // Setting the value accessor directly (instead of using
-      // the providers) to avoid running into a circular import.
-      this.ngControl.valueAccessor = this;
-    }
-  }
+  constructor(private renderer: Renderer2, private wrapper: ElementRef) {}
 
   statesResource: HttpResourceRef<State[]> = this.#statesService.getStatesResource();
 
@@ -58,19 +55,6 @@ export class MhStates implements AfterViewInit, ControlValueAccessor {
     // autofocus
     if (this.autofocus) {
       this.renderer.selectRootElement(selectEl).focus();
-    }
-
-    /**
-     * name - gets set on NgControl through inputs for NgModel and formControlName directives only.
-     * Does not work for standalone FormControl directive
-     */
-    if (this.ngControl.name) {
-      this.renderer.setAttribute(selectEl, 'name', this.ngControl.name.toString());
-    } else {
-      console.warn(`
-       It looks like you're using formControl which does not have an input for the
-       name attribute.  If the name attribute is required (i.e. when submitting a form),
-       it is recommended to use either ngModel or formControlName.`);
     }
 
     // set attributes
@@ -95,7 +79,7 @@ export class MhStates implements AfterViewInit, ControlValueAccessor {
     // set the selected index
     const index = this.statesResource
       .value()
-      .findIndex((option) => option.title === this.ngControl.value);
+      .findIndex((option) => option.title === this.select().nativeElement.value);
     this.renderer.setProperty(this.select().nativeElement, 'selectedIndex', index);
   }
 
